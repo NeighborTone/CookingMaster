@@ -1,29 +1,50 @@
 #pragma once
-namespace Player
-{
-	const int num = 35;
-	enum State {
-		stand,
-		cut,
-	};
+#include "BaseInfo.h"
+#include "Object.h"
 
-	struct Cock
-	{
-		int		        x,
-				        y,
-				        w,
-			            h,
-		 	      animCnt,
-			picHandle[num];
-		State	    state;
-	};
+class Player :protected Object {
+protected:
+	static const int	handleNum = 35;			//画像ハンドルの数
 
-	bool Initialize();
+	int					picHandle[handleNum],	//画像ハンドル
+						animCnt;				//アニメーションカウンタ
+	PlayerState			state;					//状態
 
-	void Updata();
-
-	void Draw();
-
+public:
+	Player();
+	~Player();
+	void Init();
+	void Update();
+	void Render();
 	void Fin();
+	void SetPicture();
+};
 
-}
+//namespace Player
+//{
+//	const int num = 35;
+//	enum State {
+//		stand,
+//		cutting,
+//	};
+//
+//	struct Cock
+//	{
+//		int		        x,
+//				        y,
+//				        w,
+//			            h,
+//		 	      animCnt,
+//			picHandle[num];
+//		State	    state;
+//	};
+//
+//	void Initialize();
+//
+//	void Update();
+//
+//	void Draw();
+//
+//	void Fin();
+//
+//}

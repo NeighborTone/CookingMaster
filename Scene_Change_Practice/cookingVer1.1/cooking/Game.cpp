@@ -1,47 +1,46 @@
-#include "Usingheaders.h"
-//メインゲームシーン
+#include "DxLib.h"
+#include "Input.h"
+#include "Player.h"
+#include "Game.h"
+#include "Note.h"
+#include "Sound.h"
+#include "BaseInfo.h"
+#include "NoteMng.h"
 
-bool Game::Initialize()
-{
-	//初期化ミスチェック
-	if (!BgAni::Initialize() ||
-		!Note::Initialize()  ||
-		!Player::Initialize()||
-		!Sound::Initialize())
+namespace Game {
+	int back;
+
+	NoteMng noteMng;
+	Player player;
+
+	void Initialize()
 	{
-		return false;
+		back = LoadGraph("./Graph/bg.png");
+		noteMng.Init();
+		noteMng.AddNote(180,carrot,right);
+		noteMng.AddNote(240, carrot, left);
+		player.Init();
+		Sound::Initialize();
 	}
-	return true;		//上の初期化が成功ならtrueを返す
-}
-void Game::Update()
-{
-	Sound::PlayBGM();
-	BgAni::Updata();
-	Note::Updata();
-	Player::Updata();
-	if (Key(KEY_INPUT_X) == 1)
+	void Update()
 	{
-		SceneManeger::GetInstance()->ChangeScene(new Title);
+		//Sound::PlayBGM();
+		noteMng.Update();
+		player.Update();
+
 	}
-
-}
-void Game::Draw()
-{
-	BgAni::Draw();
-	Note::Draw();
-	Player::Draw();
-
-}
-void Game::Finalize()
-{
-	BgAni::Fin();
-	Sound::Fin();
-	Note::Fin();
-	Player::Fin();
-    //↑の方が解放を意識できる
-	//↓だと勝手に全部解放してくれる
-
-	/*InitGraph();
-	InitSoundMem();*/
-
+	void Draw()
+	{
+		
+		DrawGraph(0, 0, back, true);
+		noteMng.Render();
+		player.Render();
+	
+	}
+	void Fin()
+	{
+		Sound::Fin();
+		player.Fin();
+		DeleteGraph(back);
+	}
 }

@@ -1,53 +1,68 @@
 #pragma once
-namespace Note {
+#include "BaseInfo.h"
+#include "Object.h"
 
-	struct POS
-	{			//座標
-		float x;
-		float y;
-	};
-	enum Type
-	{			//音符のタイプ
+class Note : protected Object {
+protected:
+	static const int handleNum = 4;  //画像ハンドルの数
 
-		one,	//単発
-		rest,	//長押し(休符)
-		mouse,	//ネズミ(下からくるよ)
 
-	}; 
-	enum State 
-	{
-		come,
-		cut,
-		off,
-	};
-	struct Note 
-	{
-		float		 speed,
-					  time;  //ベジエ曲線使うときに使ってね☆
-		POS			   pos,   //現在の座標
-					 start,  //出現地点
-					   dir,  //ベジエ曲線の方向点
-					   end;  //ベジエ曲線の終点、大抵は当たり判定領域
-		double			   Cnt;	//フレームカウント
-		int		  animeCnt,	//アニメカウント	
-			  picHandle[4];	//画像
-		double BPM;									//テンポ
-		double BGM_time;							//曲の時間
-		double beat;								//拍
-		double fourn_note;// = BPM / 60;			//4分音符
-		double eight_note;
-		double hit_time;// fourn_note * 2.0;		//実際に判定を取り始めるタイミング
-		double Bar_end;// = fourn_note * beat;			//1小節の長さ(終端
-		State        state;
-		Type          type;	//音符の種類
+	float		 speed,			  //移動速度
+			   	 time,			  //ベジエ曲線使うときに使ってね☆
+				 appearFlame,     //出現タイミング
+				 hitFlame;        //当たり判定に来るタイミング
+	Vec3		 start,			  //出現地点
+				 dir,			  //ベジエ曲線の方向点
+				 end;			  //ベジエ曲線の終点、大抵は当たり判定領域
+	int			 cnt,			  //フレームカウント
+				 animCnt,		  //アニメカウント	
+				 picHandle[handleNum], 	  //画像
+				 picWidth,		  //画像幅
+				 picHeight;		  //画像高さ
+	NoteState    state;			  //音符の状態
+	Type         type;			  //音符の種類
+	
 
-	};
+public:
+	Note();
+	~Note();
+	void Init(float hit, Vege vege, Direction d);		//初期化
+	void Appear();										//出現
+	void Update();										//更新
+	void Render();										//描画
+	void Fin();											//終了
+	float SetAppearFlame(float h);						//あたり判定タイミングから出現タイミングを逆算
+	float GetAppearFlame(Note);							//appearFlameを渡す
+	void SetDirection(Direction d);						//出現方向を指定、start,dir,endを代入
+	void SetPicture(Vege v);							//使う画像を指定
+	void BezierCurve2(Vec3 start, Vec3 dir, Vec3 end);	//2次ベジエ曲線で動く
+	void NoteHitCheck();								//あたり判定
+};
 
-	bool Initialize();
-
-	void Updata();
-
-	void Draw();
-
-	void Fin();
-}
+//namespace Note {
+//
+//	struct Note 
+//	{
+//		float		 speed,
+//			time;  //ベジエ曲線使うときに使ってね☆
+//		POS			   pos,   //現在の座標
+//			start,  //出現地点
+//			dir,  //ベジエ曲線の方向点
+//			end;  //ベジエ曲線の終点、大抵は当たり判定領域
+//		int			   Cnt,	//フレームカウント
+//			animeCnt,	//アニメカウント	
+//			picHandle[4];	//画像
+//		bool        active;
+//		State        state;
+//		Type          type;	//音符の種類
+//
+//	};
+//
+//	void Initialize();
+//
+//	void Updata();
+//
+//	void Draw();
+//
+//	void Fin();
+//}
