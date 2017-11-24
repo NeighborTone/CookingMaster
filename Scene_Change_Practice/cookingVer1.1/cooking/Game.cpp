@@ -16,7 +16,8 @@ bool Game::Initialize()
 		!Note::Initialize()  ||
 		!Player::Initialize()||
 		!sound.Initialize()  ||
-		!Note::LoadScore())
+		!Note::LoadScore()   ||
+		!BGM::Initialize() )
 	{
 		return false;
 	}
@@ -31,6 +32,7 @@ void Game::Update()
 	Note::Updata();
 	Player::Updata();
 	fps.Update();
+	BGM::Updata();
 	if (Key(KEY_INPUT_X) == 1)
 	{
 		SceneManeger::GetInstance()->ChangeScene(new Title);
@@ -40,9 +42,10 @@ void Game::Update()
 void Game::Draw()
 {
 	BgAni::Draw();
+	BGM::Draw();
 	Note::Draw();
 	Player::Draw();
-	fps.Draw();
+	fps.Draw(); 
 }
 void Game::Finalize()
 {
@@ -50,6 +53,7 @@ void Game::Finalize()
 	sound.Fin();
 	Note::Fin();
 	Player::Fin();
+	BGM::Fin();
     //ª‚Ì•û‚ª‰ğ•ú‚ğˆÓ¯‚Å‚«‚é
 	//«‚¾‚ÆŸè‚É‘S•”‰ğ•ú‚µ‚Ä‚­‚ê‚é
 

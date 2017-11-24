@@ -3,12 +3,11 @@
 namespace BgAni {
 
 	int background;
-	int chef[2];
+	int chef[3];
 	int aniCnt;
 	int check;
 	bool Initialize()
 	{
-		check = LoadDivGraph("./Graph/chef.png", 2, 2, 1, 227, 220, chef);
 		background = LoadGraph("./Graph/bg.png");
 		aniCnt = 0;
 			if (background == -1 || check == -1)
@@ -22,7 +21,7 @@ namespace BgAni {
 	void Updata()
 	{
 		++aniCnt;
-		if (aniCnt >= 60) {
+		if (aniCnt >= 90) {
 			aniCnt = 0;
 		}
 	}
@@ -30,7 +29,6 @@ namespace BgAni {
 	void Draw()
 	{
 		DrawGraph(0, 0, background, true);
-		DrawGraph(40, 27, chef[aniCnt/30], true);
 	}
 
 	void Fin()
