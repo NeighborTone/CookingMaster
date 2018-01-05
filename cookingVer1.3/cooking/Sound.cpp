@@ -6,7 +6,7 @@ bool Sound::Initialize()
 	SE[appear]   = LoadSoundMem("./Sound/出現.ogg");
 	SE[carrot]   = LoadSoundMem("./Sound/ニンジン.ogg");
 	SE[onion]    = LoadSoundMem("./Sound/タマネギ.ogg");
-	SE[broccoli] = LoadSoundMem("./Sound/キャベツ.ogg");
+	SE[broccoli] = LoadSoundMem("./Sound/ブロッコリー.ogg");
 	SE[cabbage]  = LoadSoundMem("./Sound/キャベツ.ogg");
 	SE[tomato]   = LoadSoundMem("./Sound/トマト.ogg");
 	SE[potato]   = LoadSoundMem("./Sound/ジャガイモ.ogg");
