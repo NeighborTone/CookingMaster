@@ -1,5 +1,5 @@
 #pragma once
-constexpr int noteMax = 120;
+constexpr int noteMax = 120;	//仮の数。マスターアップ時に最終的な値に変更すること
 extern const int
 quarterNote,		//四分音符の長さ(ms)
 halfNote,			//二分音符の長さ(ms)
