@@ -10,6 +10,13 @@ bool Result::Initialize()
 	flag = false;
 	bghandle = LoadGraph("./Graph/ƒŠƒUƒ‹ƒg.png");
 	sound.SetBGM("./Sound/“÷‚ğÄ‚­.ogg");
+
+	food.pic_carrot = LoadGraph("./Graph/carrot.png");
+	food.pic_cabbage = LoadGraph("./Graph/cabbage.png");
+	food.pic_potato = LoadGraph("./Graph/potato.png");
+	food.pic_tomato = LoadGraph("./Graph/tomato.png");
+	food.pic_broccoli = LoadGraph("./Graph/broccoli.png");
+	food.pic_onion = LoadGraph("./Graph/onion.png");
 	if (bghandle == -1)
 	{
 		return false;

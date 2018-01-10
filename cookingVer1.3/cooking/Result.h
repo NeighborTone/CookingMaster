@@ -25,6 +25,19 @@ public:
 		int handle;
 	};
 	hoge h1, h2, h3;
+
+	struct Food
+	{
+		int pic_carrot,	//‰æ‘œƒnƒ“ƒhƒ‹
+			pic_cabbage,
+			pic_potato,
+			pic_tomato,
+			pic_broccoli,
+			pic_onion;
+	};
+
+	Food food;
+
 private:
 	int bghandle;
 	
