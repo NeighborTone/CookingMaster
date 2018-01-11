@@ -96,7 +96,7 @@ void Note::SetScore(int id, Note& note, const File& file) {
 	//Vec start,dir,end
 	SetBezierData(note);
 	//speed
-	SetSpeed(note);
+	//SetSpeed(note);
 
 }
 
@@ -141,7 +141,8 @@ void Note::SetBezierData(Note& note) {
 		note.move.end.y = 280.0f;
 		note.move.dir.x = (note.move.end.x - note.move.start.x)/ 2.0f;
 		//dir.yはN_Typeによって変わる
-		note.move.dir.y = (note.move.note_type == N_one) ? float(SCREEN_HEIGHT / 3) : float(SCREEN_HEIGHT / 5);  //要変更
+		note.move.dir.y = (note.move.note_type == N_one) ? float(SCREEN_HEIGHT / 3) : -50/*float(SCREEN_HEIGHT / 10)*/;  //要変更
+		note.move.pos = note.move.start;
 		break;
 	case RIGHT:
 		note.move.start.x = float(SCREEN_WIDIH + imageSizeX / 2);
@@ -150,20 +151,23 @@ void Note::SetBezierData(Note& note) {
 		note.move.end.y = 280.0f;
 		note.move.dir.x = note.move.end.x + float((note.move.start.x - note.move.end.x) / 2);
 		//dir.yはN_Typeによって変わる
-		note.move.dir.y = (note.move.note_type == N_one) ? float(SCREEN_HEIGHT / 3) : float(SCREEN_HEIGHT / 5);  //要変更
+		note.move.dir.y = (note.move.note_type == N_one) ? float(SCREEN_HEIGHT / 3) : -50/*float(SCREEN_HEIGHT / 10)*/;  //要変更
+		note.move.pos = note.move.start;
 		break;
 	case BOTTOM:
 		note.move.start.x = float(SCREEN_WIDIH + imageSizeX / 2);
-		note.move.start.y = float(500);
-		note.move.end.x = float(0);	//左端
-		note.move.end.y = 500.0f;		
+		note.move.start.y = 450.0f;
+		note.move.end.x = float(-imageSizeX / 2);
+		note.move.end.y = 450.0f;		
 		note.move.dir.x = 760;
 		//dir.yはN_Typeによって変わる
-		note.move.dir.y = 400.0f;
+		note.move.dir.y = float(SCREEN_HEIGHT-15);
+		note.move.pos = note.move.start;
 		break;
 	}
 }
 
+//使わなくなった
 void Note::SetSpeed(Note& note) {
 	switch (note.move.note_type) {
 	case N_one:
@@ -173,8 +177,8 @@ void Note::SetSpeed(Note& note) {
 		note.move.speed = float(((630 / 2) - (-imageSizeX / 2)) / halfNote);	//1msで何ピクセル移動するか
 		break;
 	case N_mouse:
-		note.move.speed = -0.2f;	//1msで何ピクセル移動するか
-		//note.move.speed = float(((630 / 2) - (-imageSizeX / 2)) / halfNote);	//1msで何ピクセル移動するか
+		//note.move.speed = -1.0f;	//1msで何ピクセル移動するか
+		note.move.speed = float(((SCREEN_WIDIH / 2) - (-imageSizeX / 2)) / dottedHalfNote);	//1msで何ピクセル移動するか
 		break;
 	}
 }		
@@ -351,7 +355,7 @@ void Note::Update()
 			move.animeCnt++;
 		}
 
-		if (move.pos.y >= 500) {
+		if (move.pos.y >= SCREEN_HEIGHT) {
 			move.state = off;
 		}
 		else if (data.d == BOTTOM && move.pos.x <= 0) {
