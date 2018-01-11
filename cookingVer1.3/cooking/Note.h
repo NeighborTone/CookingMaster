@@ -55,7 +55,14 @@ struct BezierCurve {
 		bez({ 0,0 }), time(0) {}
 	~BezierCurve() {}
 	void BezTimeUpdate(N_Type nt, int current, int appear) {
-		time = float(current - appear) / ((nt == N_one) ? (float)quarterNote : (float)halfNote);
+		switch (nt) {
+		case N_one: 
+			time = float(current - appear) / (float)quarterNote;	break;
+		case N_rest:
+			time = float(current - appear) / (float)halfNote;		break;
+		case N_mouse:
+			time = float(current - appear) / float(dottedHalfNote*2);	break;
+		}
 	}
 	POS MoveBezier2(POS start,POS dir,POS end){
 		bez.x = (1 - time)*(1 - time)*start.x + 2 * (1 - time)*time*dir.x + time*time*end.x;
