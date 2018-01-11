@@ -8,15 +8,15 @@ bool Result::Initialize()
 	h3.pos.SetPOS(3000, 300);
 	a = 0;
 	flag = false;
-	bghandle = LoadGraph("./Graph/ÉäÉUÉãÉg.png");
+	bghandle = LoadGraph("./Graph/result.png");
 	sound.SetBGM("./Sound/ì˜ÇèƒÇ≠.ogg");
 
-	food.pic_carrot = LoadGraph("./Graph/carrot.png");
-	food.pic_cabbage = LoadGraph("./Graph/cabbage.png");
-	food.pic_potato = LoadGraph("./Graph/potato.png");
-	food.pic_tomato = LoadGraph("./Graph/tomato.png");
-	food.pic_broccoli = LoadGraph("./Graph/broccoli.png");
-	food.pic_onion = LoadGraph("./Graph/onion.png");
+	carrot.pic = LoadGraph("./Graph/Rcarrot.png");
+	cabbage.pic = LoadGraph("./Graph/Rcabbage.png");
+	potato.pic = LoadGraph("./Graph/Rpotato.png");
+	tomato.pic = LoadGraph("./Graph/Rtomato.png");
+	brory.pic = LoadGraph("./Graph/Rbroccoli.png");
+	onion.pic = LoadGraph("./Graph/Ronion.png");
 	if (bghandle == -1)
 	{
 		return false;
