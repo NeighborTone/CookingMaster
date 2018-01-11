@@ -33,13 +33,21 @@ public:
 		int pic;
 		POS pos;
 	};
+	float c;
+	int Rcarrot, Ronion, Rcabbage, Rpotato, Rtomato, Rbrory;
 
 	Food carrot;
 	Food onion;
-	Food cabbage;
+	Food cabbage0;
+	Food cabbage1;
+	Food cabbage2;
+	Food cabbage3;
+	Food cabbage4;
 	Food potato;
 	Food tomato;
 	Food brory;
+
+	//void PutAni(Food& f, float y);
 
 private:
 	int bghandle;

@@ -19,7 +19,7 @@ int WINAPI WinMain(HINSTANCE,HINSTANCE,LPSTR,int)
 
 	//Å‰‚É‰f‚éƒV[ƒ“
 #ifdef _DEBUG
-	manager->PushScene(new Game);
+	manager->PushScene(new Result);
 #else
 	manager->PushScene(new Title);
 #endif 
