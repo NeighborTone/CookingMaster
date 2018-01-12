@@ -1,5 +1,5 @@
 #pragma once
-
+#include "easing.hpp"
 class Result : public Scene
 {
 public:
@@ -7,47 +7,39 @@ public:
 	void Update()	  override;
 	void Draw()       override;
 	void Finalize()   override;
-	struct POS
+	struct POS_R
 	{
-		void SetPOS(float x, float y)
+		void SetPOS_R(float x, float y, float arrival, double rotate, int pic)
 		{
 			this->x = x;
 			this->y = y;
+			this->arrival = arrival;
+			this->rotate = rotate;
+			this->pic = pic;
 		}
-		float x, y;
+		float x, y, arrival; double rotate; int pic;
 	};
 	int a;
 	Sound sound;
 
-	struct hoge  //‰¼
-	{
-		POS pos;
-		int handle;
-	};
-	hoge h1, h2, h3;
-
 	
+
+	int timeCnt;
 
 	struct Food
 	{
 		int pic;
-		POS pos;
+		Easing anim;
+		bool flag;
+		POS_R pos;
 	};
-	float c;
-	int Rcarrot, Ronion, Rcabbage, Rpotato, Rtomato, Rbrory;
+	int Rcabbage, Rpotato, Rtomato, Rbrory, Rcarrot, Ronion, Rtomato2;
 
-	Food carrot;
-	Food onion;
-	Food cabbage0;
-	Food cabbage1;
-	Food cabbage2;
-	Food cabbage3;
-	Food cabbage4;
-	Food potato;
-	Food tomato;
-	Food brory;
+	Food food[33];
 
-	//void PutAni(Food& f, float y);
+	void PutAni(Food& f);
+	void TimeAni(Food& f, int n);
+	int scoreAni();
 
 private:
 	int bghandle;

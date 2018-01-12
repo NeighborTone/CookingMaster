@@ -5,6 +5,7 @@ namespace Player {
 		SCREEN_WIDIH = 960,
 		SCREEN_HEIGHT = 540;
 	const int num = 7;
+	int alpha;	//α値エフェクト用
 	Cock cock;
 	Cock check;	//あたり判定の可視化に用いる、不要になったら削除
 	Effect effect;
@@ -22,7 +23,7 @@ namespace Player {
 		staff.BPM = 130;									//曲BPM
 		staff.second = 60;									//1秒
 		staff.singlfps = 1000 / 60;							//1フレーム分の時間[ms]
-
+		alpha = 0;
 		staff.beat = 4;										//拍子
 		staff.sibu = 1000 * (staff.second / staff.BPM);		//4分音符1個分の終了点
 
@@ -80,6 +81,7 @@ namespace Player {
 		{
 			cock.state = cut;
 		}
+		alpha += 70;
 	}
 
 	void Draw()
@@ -186,22 +188,31 @@ namespace Player {
 
 	void Effect_draw()
 	{
+		
 		if (effect.Cnt <= 5) {			//cut始めてから5フレイム後まで
 			if (cock.dir == RIGHT) {	//右方向のエフェクト
+				SetDrawBlendMode(DX_BLENDMODE_ALPHA,  alpha);		//ブレンドモードαを設定
 				DrawRotaGraph(check.x - 20, check.y + 80, 1.0, 0.0, cock.e_pic, true);
+				SetDrawBlendMode(DX_BLENDMODE_NOBLEND, alpha = 0);		//ブレンドモードをオフ
 			}
 			if (cock.dir == LEFT) {		 //左方向のエフェクト
+				SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);		//ブレンドモードαを設定
 				DrawRotaGraph((check.x / 2) + 10, check.y + 90, 1.0, 0.0, cock.e_pic, true);
+				SetDrawBlendMode(DX_BLENDMODE_NOBLEND, alpha = 0);		//ブレンドモードをオフ
 			}
 			if (cock.dir == BOTTOM) {		 //下方向のエフェクト
+				SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);		//ブレンドモードαを設定
 				DrawRotaGraph(check.x - 145, check.y + 240, 1.0, 0.0, cock.e_pic, true);
+				SetDrawBlendMode(DX_BLENDMODE_NOBLEND, alpha = 0);		//ブレンドモードをオフ
 			}
 		}
 		else
 		{
+			
 			effect.flag = false;
 			effect.Cnt = 0;
 		}
+		
 		effect.Cnt++;
 	}
 
