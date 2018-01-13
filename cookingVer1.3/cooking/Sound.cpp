@@ -6,7 +6,7 @@ bool Sound::Initialize()
 	SE[appear]   = LoadSoundMem("./Sound/出現.ogg");
 	SE[carrot]   = LoadSoundMem("./Sound/ニンジン.ogg");
 	SE[onion]    = LoadSoundMem("./Sound/タマネギ.ogg");
-	SE[broccoli] = LoadSoundMem("./Sound/キャベツ.ogg");
+	SE[broccoli] = LoadSoundMem("./Sound/ブロッコリー.ogg");
 	SE[cabbage]  = LoadSoundMem("./Sound/キャベツ.ogg");
 	SE[tomato]   = LoadSoundMem("./Sound/トマト.ogg");
 	SE[potato]   = LoadSoundMem("./Sound/ジャガイモ.ogg");
@@ -60,7 +60,7 @@ int Sound::PlayBGM_LOOP()
 	}
 	return BGM;
 }
-int Sound::PlaySE(int type)
+void Sound::PlaySE(int type)
 {
 	switch (type)
 	{
@@ -72,18 +72,12 @@ int Sound::PlaySE(int type)
 	case tomato:      PlaySoundMem(SE[tomato],		 DX_PLAYTYPE_BACK);	break;
 	case potato:	  PlaySoundMem(SE[potato],		 DX_PLAYTYPE_BACK);	break;
 	case mouse:       PlaySoundMem(SE[mouse],		 DX_PLAYTYPE_BACK);	break;
-	case meat:        PlaySoundMem(SE[meat],		 DX_PLAYTYPE_BACK);	break;
-	case cuttingboard:PlaySoundMem(SE[cuttingboard], DX_PLAYTYPE_BACK);	break;
-	case simmer:      PlaySoundMem(SE[simmer],		 DX_PLAYTYPE_BACK);	break;
 	case grill:		  PlaySoundMem(SE[grill],		 DX_PLAYTYPE_BACK);	break;
-	case jump:		  PlaySoundMem(SE[jump],		 DX_PLAYTYPE_BACK);	break;
-	case slash:		  PlaySoundMem(SE[slash],		 DX_PLAYTYPE_BACK);	break;
 	case bell:		  PlaySoundMem(SE[bell],		 DX_PLAYTYPE_BACK);	break;
 	case bell2:		  PlaySoundMem(SE[bell2],        DX_PLAYTYPE_BACK);	break;
 	case appear:	  PlaySoundMem(SE[appear],		 DX_PLAYTYPE_BACK);	break;
 					  
-	}				  
-	return 0;		  
+	}				  	  
 }			
 
 void Sound::Fin()	  

@@ -5,6 +5,7 @@ namespace Player {
 		SCREEN_WIDIH = 960,
 		SCREEN_HEIGHT = 540;
 	const int num = 7;
+	int alpha;	//α値エフェクト用
 	Cock cock;
 	Cock check;	//あたり判定の可視化に用いる、不要になったら削除
 	Effect effect;
@@ -18,10 +19,11 @@ namespace Player {
 
 	bool Initialize()
 	{
+		int pic[5];
 		staff.BPM = 130;									//曲BPM
 		staff.second = 60;									//1秒
 		staff.singlfps = 1000 / 60;							//1フレーム分の時間[ms]
-
+		alpha = 0;
 		staff.beat = 4;										//拍子
 		staff.sibu = 1000 * (staff.second / staff.BPM);		//4分音符1個分の終了点
 
@@ -41,14 +43,15 @@ namespace Player {
 		effect.flag = false;
 		effect.Cnt = 0;
 
-		//c1,c2,c3はエラーチェック用変数。
-		int c = LoadDivGraph("./Graph/stand.png", 3, 3, 1, 277, 524, cock.Gstand);
-		int c2 =LoadDivGraph("./Graph/cutR.png", 3, 3, 1, 394, 495, cock.GcutR);
-		int c3 = LoadDivGraph("./Graph/cutL.png", 3, 3, 1, 388, 517, cock.GcutL);
-		int c4 = LoadDivGraph("./Graph/bottom.png", 3, 3, 1, 336, 521, cock.GcutB);
+		//エラーチェック用変数。
+		pic[0] = LoadDivGraph("./Graph/stand.png", 3, 3, 1, 277, 524, cock.Gstand);
+		pic[1] =LoadDivGraph("./Graph/cutR.png", 3, 3, 1, 394, 495, cock.GcutR);
+		pic[2] = LoadDivGraph("./Graph/cutL.png", 3, 3, 1, 388, 517, cock.GcutL);
+		pic[3] = LoadDivGraph("./Graph/bottom.png", 3, 3, 1, 336, 521, cock.GcutB);
 		cock.e_pic = LoadGraph("./Graph/effect.png", true);
+		bool Check = pic[0] == -1 || pic[1] == -1 || pic[2] == -1 || pic[3] == -1 || cock.e_pic == -1;
 
-		if (c == -1 || c2 == -1 || c3 == -1)
+		if (Check)
 		{
 			return false;
 		}
@@ -78,6 +81,7 @@ namespace Player {
 		{
 			cock.state = cut;
 		}
+		alpha += 70;
 	}
 
 	void Draw()
@@ -184,22 +188,31 @@ namespace Player {
 
 	void Effect_draw()
 	{
+		
 		if (effect.Cnt <= 5) {			//cut始めてから5フレイム後まで
 			if (cock.dir == RIGHT) {	//右方向のエフェクト
+				SetDrawBlendMode(DX_BLENDMODE_ALPHA,  alpha);		//ブレンドモードαを設定
 				DrawRotaGraph(check.x - 20, check.y + 80, 1.0, 0.0, cock.e_pic, true);
+				SetDrawBlendMode(DX_BLENDMODE_NOBLEND, alpha = 0);		//ブレンドモードをオフ
 			}
 			if (cock.dir == LEFT) {		 //左方向のエフェクト
+				SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);		//ブレンドモードαを設定
 				DrawRotaGraph((check.x / 2) + 10, check.y + 90, 1.0, 0.0, cock.e_pic, true);
+				SetDrawBlendMode(DX_BLENDMODE_NOBLEND, alpha = 0);		//ブレンドモードをオフ
 			}
 			if (cock.dir == BOTTOM) {		 //下方向のエフェクト
+				SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);		//ブレンドモードαを設定
 				DrawRotaGraph(check.x - 145, check.y + 240, 1.0, 0.0, cock.e_pic, true);
+				SetDrawBlendMode(DX_BLENDMODE_NOBLEND, alpha = 0);		//ブレンドモードをオフ
 			}
 		}
 		else
 		{
+			
 			effect.flag = false;
 			effect.Cnt = 0;
 		}
+		
 		effect.Cnt++;
 	}
 

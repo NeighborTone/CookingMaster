@@ -8,7 +8,7 @@ public:
 	void Draw()       override;
 	void Finalize()   override;
 
-	int α;		//透過率
+	int a;		//透過率
 	bool startFlag;	//フェードアウトフラグ(開始)
 	bool endFlag;
 	Sound sound;
@@ -31,6 +31,7 @@ public:
 		POS pos;
 		SELECT select;
 		int handle;
+		float angle;
 	};
 	Cursor cursor;			//カーソル
 	int bgHandle;			//背景ハンドル

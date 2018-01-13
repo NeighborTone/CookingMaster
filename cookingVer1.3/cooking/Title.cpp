@@ -1,11 +1,13 @@
+#define _USE_MATH_DEFINES
 #include "Usingheaders.h"
 #include "Game_OP.h"
+#include <math.h>
 bool Title::Initialize()
 {
 	sound.Initialize();
 	sound.InitBGM();	
 	sound.SetBGM("./Sound/いらっしゃいませ!.ogg");
-	α = 255 / 3;
+	a = 255 / 3;
 	startFlag = false;
 	endFlag = false;
 	int c[5];
@@ -13,7 +15,7 @@ bool Title::Initialize()
 	c[1] = logo.handle = LoadGraph("./Graph/logo.png");
 	c[2] = s_button.handle = LoadGraph("./Graph/start_button.png");
 	c[3] = e_button.handle = LoadGraph("./Graph/exit_button.png");
-	c[4] = cursor.handle = LoadGraph("./Graph/カーソル(仮).png");
+	c[4] = cursor.handle = LoadGraph("./Graph/cursor.png");
 
 	for (int i = 0; i < 5; ++i)
 	{
@@ -25,6 +27,7 @@ bool Title::Initialize()
 	logo.pos.SetPOS(480, -300);
 	s_button.pos.SetPOS(310, 600);
 	e_button.pos.SetPOS(310, 700);
+	cursor.angle = 0;
 	cursor.pos.SetPOS(-5000, 0);
 	cursor.select = Start;
 	return true;
@@ -39,7 +42,7 @@ void Title::Update()
 	s_button.pos.y += s_dy;
 	float e_dy = (400.f - e_button.pos.y) / 22.0f;
 	e_button.pos.y += e_dy;
-	float c_dx = (260.f - cursor.pos.x) / 15.0f;
+	float c_dx = (250.f - cursor.pos.x) / 15.0f;
 	cursor.pos.x += c_dx;
 	if (startFlag == false && endFlag == false)
 	{
@@ -54,37 +57,57 @@ void Title::Update()
 		switch (cursor.select)
 		{
 		case Start:
-			cursor.pos.y = s_button.pos.y +20;
+			cursor.pos.y = s_button.pos.y +40;
 			break;
 		case End:
-			cursor.pos.y = e_button.pos.y +20;
+			cursor.pos.y = e_button.pos.y +40;
 			break;
 		}
 	}
-	if (α < 0 && endFlag == false)
+	if (startFlag == true && a < 255)
+	{
+		if(cursor.angle <= 45)
+			++cursor.angle;
+		else
+		{
+			float c_dx2 = (400.f - cursor.pos.x) / 15.0f;
+			cursor.pos.x += c_dx2;
+		}
+	}
+	if (endFlag == true && a < 255)
+	{
+		if (cursor.angle <= 45)
+			++cursor.angle;
+		else
+		{
+			float c_dx2 = (410.f - cursor.pos.x) / 15.0f;
+			cursor.pos.x += c_dx2;
+		}
+	}
+	if (a < 0 && endFlag == false)
 	{
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);		//ブレンドモードをオフ
 		SetDrawMode(DX_DRAWMODE_NEAREST);	//解除
 		SceneManeger::GetInstance()->ChangeScene(new OP);
 	}
 
-	if (α <= 255 && startFlag == false && endFlag == false)
+	if (a <= 255 && startFlag == false && endFlag == false)
 	{
-		α += 2;
+		a += 2;
 	}
 	//ゲーム開始
-	if (cursor.select == Start && Key(KEY_INPUT_Z) == 1 && α >= 255)
+	if (cursor.select == Start && Key(KEY_INPUT_Z) == 1 && a >= 255)
 	{
 		sound.PlaySE(bell);
 		startFlag = true;
 	}
 	//退勤ベル
-	if (cursor.select == End && Key(KEY_INPUT_Z) == 1 && α >= 255 && CheckSoundMem(sound.SE[bell2]) == 0)
+	if (cursor.select == End && Key(KEY_INPUT_Z) == 1 && a >= 255 && CheckSoundMem(sound.SE[bell2]) == 0)
 	{
 		sound.InitBGM();
 		sound.PlaySE(bell2);
 		endFlag = true;
-		
+		++cursor.angle;
 	}
 	//退勤ベルが鳴り終わったら終了
 	if (CheckSoundMem(sound.SE[bell2]) == 0 && endFlag == true)
@@ -94,19 +117,19 @@ void Title::Update()
 	}
 	if (startFlag == true || endFlag == true)
 	{
-		α -= 2;
+		a -= 2;
 	}
 }
 
 void Title::Draw()
 {
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, α);		//ブレンドモードαを設定
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, a);		//ブレンドモードαを設定
 	SetDrawMode(DX_DRAWMODE_BILINEAR);				//実数ピクセル補間
 	DrawGraph(0, 0, bgHandle, true);
-	DrawRotaGraphF(logo.pos.x, logo.pos.y, 1.2f, 0, logo.handle, true);
+	DrawRotaGraphF(logo.pos.x, logo.pos.y, 1.1f, 0, logo.handle, true);
 	DrawGraphF(s_button.pos.x, s_button.pos.y, s_button.handle, true);
 	DrawGraphF(e_button.pos.x, e_button.pos.y, e_button.handle, true);
-	DrawGraphF(cursor.pos.x, cursor.pos.y, cursor.handle, true);
+	DrawRotaGraphF(cursor.pos.x, cursor.pos.y,1, cursor.angle * static_cast<float>(M_PI) / 180.f, cursor.handle, true);
 }
 
 void Title::Finalize()

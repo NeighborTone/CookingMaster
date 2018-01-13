@@ -1,4 +1,5 @@
 #pragma once
+constexpr int SENUM = 11;
 enum TYPE
 {
 
@@ -10,18 +11,9 @@ enum TYPE
 	tomato,			//トマト5
 	potato,			//ジャガイモ6
 	mouse,			//ネズミ7
-
-
-
-
-	meat,			//肉8
-	cuttingboard,	//まな板9
-	simmer,			//煮る10
-	grill,			//焼く11
-	jump,			//ジャンプ12
-	slash,			//切る13
-	bell,			//入店音（ベル）14
-	bell2,			//退勤音15
+	grill,			//焼く8
+	bell,			//入店音（ベル）9
+	bell2,			//退勤音10
 
 };
 
@@ -30,7 +22,7 @@ class Sound
 {
 private:
 
-	static constexpr int SENUM = 16;
+	
 	bool   flag;
 
 public:
@@ -43,7 +35,7 @@ public:
 	int  PlayBGM_BACK();				//BGMをバックグラウンド再生（ループなし）
 	int  PlayBGM_LOOP();				//BGMをループ再生
 	void InitBGM();						//現在格納されているBGMデータを解放し、再生フラグの再セット
-	int  PlaySE(int);					//enum型でIDを指定、戻り値は0
+	void PlaySE(int);					//enum型でIDを指定
 	void Fin();							//全データ開放
 
 };
