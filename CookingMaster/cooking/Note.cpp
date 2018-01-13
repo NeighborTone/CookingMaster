@@ -14,10 +14,10 @@ bool File::LoadScore()
 #if _DEBUG
 	ifstream ifs_noteJust("./ScoreData/Scoredata_Debug.csv");	//音符のジャストの判定タイミング(※ファイルに書く時間は小数点以下まで書くこと)
 	ifstream ifs_type("./ScoreData/type_Debug.csv");				//音符の画像とSEのデータ
-	ifstream ifs_appaer("./ScoreData/dir.csv");			    //左右の方向のデータ
+	ifstream ifs_appaer("./ScoreData/dir_Debug.csv");			    //左右の方向のデータ
 #else
 	ifstream ifs_noteJust("./ScoreData/Scoredata1.csv");	//音符のジャストの判定タイミング(※ファイルに書く時間は小数点以下まで書くこと)
-	ifstream ifs_type("./ScoreData/type.csv");				//音符の画像とSEのデータ
+	ifstream ifs_type("./ScoreData/type.csv");				    //音符の画像とSEのデータ
 	ifstream ifs_appaer("./ScoreData/dir.csv");			    //左右の方向のデータ
 #endif
 
@@ -186,7 +186,7 @@ void Note::SetSpeed(Note& note) {
 //バッド判定
 bool Note_Check_Bad(int c, int j)
 {
-	static constexpr int Input_Reception_MAX = 60;
+	static constexpr int Input_Reception_MAX = 65;
 	if (c >= j - Input_Reception_MAX &&
 		c >= j + Input_Reception_MAX)
 	{
@@ -197,7 +197,7 @@ bool Note_Check_Bad(int c, int j)
 //グッド判定
 bool Note_Check_Good(int c, int j)
 {
-	static constexpr int GOOD = 65;
+	static constexpr int GOOD = 60;
 	
 	if (c >= j - GOOD &&
 		c <= j + GOOD &&

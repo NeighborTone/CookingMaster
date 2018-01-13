@@ -72,10 +72,13 @@
     <ClInclude Include="Metronome.h">
       <Filter>ヘッダ</Filter>
     </ClInclude>
-    <ClInclude Include="Result.h">
+    <ClInclude Include="Game_OP.h">
       <Filter>ヘッダ</Filter>
     </ClInclude>
-    <ClInclude Include="Game_OP.h">
+    <ClInclude Include="easing.hpp">
+      <Filter>ヘッダ</Filter>
+    </ClInclude>
+    <ClInclude Include="Result.h">
       <Filter>ヘッダ</Filter>
     </ClInclude>
   </ItemGroup>
