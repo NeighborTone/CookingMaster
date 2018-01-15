@@ -22,7 +22,7 @@ public:
 	int a;
 	Sound sound;
 
-	
+
 
 	int timeCnt;
 
@@ -37,12 +37,13 @@ public:
 
 	Food food[33];
 
+	void pos_initilize();
 	void PutAni(Food& f);
 	void TimeAni(Food& f, int n);
 	int scoreAni();
 
 private:
 	int bghandle;
-	
+
 	bool flag;
 };

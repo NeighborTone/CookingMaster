@@ -1,8 +1,5 @@
 #include "Usingheaders.h"
-
 #define PI 3.141592654
-
-const int cntNum = 33;
 
 bool Result::Initialize()
 {
@@ -19,40 +16,7 @@ bool Result::Initialize()
 	Rbrory = LoadGraph("./Graph/Rbrory.png");
 	Ronion = LoadGraph("./Graph/Ronion.png");
 
-	//x, y, arrival, rotation, picnumber
-	food[0].pos.SetPOS_R(438, 0, 118, 0.0, 0);
-	food[1].pos.SetPOS_R(437, 0, 430, PI*1.2, 0);
-	food[2].pos.SetPOS_R(400, 0, 200, PI/6,3);
-	food[3].pos.SetPOS_R(600, 0, 300, PI/3,0);
-	food[4].pos.SetPOS_R(580, 0, 230, PI*1.5, 2);
-	food[5].pos.SetPOS_R(600, 0, 150, PI/2, 4);
-	food[6].pos.SetPOS_R(320, 0, 220, 0.0, 1);
-	food[7].pos.SetPOS_R(520, 0, 310, PI/4, 5);
-	food[8].pos.SetPOS_R(550, 0, 360, PI*1.4 , 0);
-	food[9].pos.SetPOS_R(337, 0, 305, PI*1.4, 6);
-	food[10].pos.SetPOS_R(392, 0, 362, PI*1.6, 3);
-	food[11].pos.SetPOS_R(607, 0, 267, PI*1.2, 5);
-	food[12].pos.SetPOS_R(453, 0, 295, PI*1.5, 4);
-	food[13].pos.SetPOS_R(495, 0, 225, PI*1.2, 0);
-	food[14].pos.SetPOS_R(558, 0, 440, PI / 3, 2);
-	food[15].pos.SetPOS_R(542, 0, 106, 0.0, 1);
-	food[16].pos.SetPOS_R(314, 0, 200, PI /4*3, 0);
-	food[17].pos.SetPOS_R(510, 0, 150, PI*1.8, 6);
-	food[18].pos.SetPOS_R(612, 0, 342, PI / 4, 3);
-	food[19].pos.SetPOS_R(431, 0, 454, 0.0, 4);
-	food[20].pos.SetPOS_R(357, 0, 237, 0.0, 5);
-	food[21].pos.SetPOS_R(583, 0, 407, PI*0.7, 0);
-	food[22].pos.SetPOS_R(356, 0, 141, 0.0, 4);
-	food[23].pos.SetPOS_R(525, 0, 422, 0.0, 3);
-	food[24].pos.SetPOS_R(637, 0, 197, 0.0, 1);
-	food[25].pos.SetPOS_R(646, 0, 269, 0.0, 4);
-	food[26].pos.SetPOS_R(583, 0, 235, PI/6, 3);
-	food[27].pos.SetPOS_R(425, 0, 323, PI *1.8, 0);
-	food[28].pos.SetPOS_R(401, 0, 260, PI *1.8, 3);
-	food[29].pos.SetPOS_R(618, 0, 382, 0.0, 1);
-	food[30].pos.SetPOS_R(541, 0, 335, 0.0, 5);
-	food[31].pos.SetPOS_R(446, 0, 335, PI *1.5, 2);
-	food[32].pos.SetPOS_R(447, 0, 149, 0.0, 1);
+	pos_initilize();
 
 	if (bghandle == -1)
 	{
@@ -77,10 +41,10 @@ void Result::Update()
 	}
 	for (int i = 0; i < scoreAni(); ++i)
 	{
-		TimeAni(food[i], i);
+		TimeAni(food[i], i);	//一定時間がなったかチェック
 		if (food[i].flag == true)
 		{
-			PutAni(food[i]);
+			PutAni(food[i]);	//easingアニメーションで描く
 		}
 	}
 
@@ -95,7 +59,7 @@ void Result::Update()
 void Result::Draw()
 {
 	
-	//SetDrawBlendMode(DX_BLENDMODE_ALPHA, a);		//ブレンドモードαを設定
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, a);		//ブレンドモードαを設定
 	DrawGraph(0, 0, bghandle, true);
 
 	for (int i = 0; i < scoreAni(); ++i)
@@ -116,18 +80,60 @@ void Result::Draw()
 
 void Result::Finalize()
 {
+	for (int i = 0; i < scoreAni(); i++)
+	{
+		DeleteGraph(food[i].pic);
+	}
 	InitGraph();
 	InitSoundMem();
 }
 
+void Result::pos_initilize()
+{
+	//x, y, 到着座標(y)、画像の回転、画像の番号
+	food[0].pos.SetPOS_R(438, -150, 118, 0.0, 0);
+	food[1].pos.SetPOS_R(437, -150, 430, PI*1.2, 0);
+	food[2].pos.SetPOS_R(400, -150, 200, PI/6,3);
+	food[3].pos.SetPOS_R(600, -150, 300, PI/3,0);
+	food[4].pos.SetPOS_R(580, -150, 230, PI*1.5, 2);
+	food[5].pos.SetPOS_R(600, -150, 150, PI/2, 4);
+	food[6].pos.SetPOS_R(320, -150, 220, 0.0, 1);
+	food[7].pos.SetPOS_R(520, -150, 310, PI/4, 5);
+	food[8].pos.SetPOS_R(550, -150, 360, PI*1.4 , 0);
+	food[9].pos.SetPOS_R(337, -150, 305, PI*1.4, 6);
+	food[10].pos.SetPOS_R(392, -150, 362, PI*1.6, 3);
+	food[11].pos.SetPOS_R(607, -150, 267, PI*1.2, 5);
+	food[12].pos.SetPOS_R(453, -150, 295, PI*1.5, 4);
+	food[13].pos.SetPOS_R(495, -150, 225, PI*1.2, 0);
+	food[14].pos.SetPOS_R(558, -150, 440, PI / 3, 2);
+	food[15].pos.SetPOS_R(542, -150, 106, 0.0, 1);
+	food[16].pos.SetPOS_R(314, -150, 200, PI /4*3, 0);
+	food[17].pos.SetPOS_R(510, -150, 150, PI*1.8, 6);
+	food[18].pos.SetPOS_R(612, -150, 342, PI / 4, 3);
+	food[19].pos.SetPOS_R(431, -150, 454, 0.0, 4);
+	food[20].pos.SetPOS_R(357, -150, 237, 0.0, 5);
+	food[21].pos.SetPOS_R(583, -150, 407, PI*0.7, 0);
+	food[22].pos.SetPOS_R(356, -150, 141, 0.0, 4);
+	food[23].pos.SetPOS_R(525, -150, 422, 0.0, 3);
+	food[24].pos.SetPOS_R(637, -150, 197, 0.0, 1);
+	food[25].pos.SetPOS_R(646, -150, 269, 0.0, 4);
+	food[26].pos.SetPOS_R(583, -150, 235, PI/6, 3);
+	food[27].pos.SetPOS_R(425, -150, 323, PI *1.8, 0);
+	food[28].pos.SetPOS_R(401, -150, 260, PI *1.8, 3);
+	food[29].pos.SetPOS_R(618, -150, 382, 0.0, 1);
+	food[30].pos.SetPOS_R(541, -150, 335, 0.0, 5);
+	food[31].pos.SetPOS_R(446, -150, 335, PI *1.5, 2);
+	food[32].pos.SetPOS_R(447, -150, 149, 0.0, 1);
+}
+
 void Result::PutAni(Food& f) 
 {
-	f.pos.y = f.anim.BounceOut(f.anim.Time(10), 0, f.pos.arrival - 0, 10.f);
+	f.pos.y = f.anim.BounceOut(f.anim.Time(10), 0, f.pos.arrival - 0, 10.f);   //easingアニメーション
 }
 
 void Result::TimeAni(Food& f, int n)
 {
-	if (timeCnt % ((10*n)+1) == 0) //（フレーム数＊順番）＋ディレイ
+	if (timeCnt % ((10*n)+100) == 0) //（タイムカウント％（フレーム数＊順番））＋ディレイ
 	{
 		f.flag = true;
 	}
@@ -135,9 +141,9 @@ void Result::TimeAni(Food& f, int n)
 
 int Result::scoreAni()
 {
-	if (Score() >= 100 && Score() < 200)
+	if (Score() >= 100 && Score() < 200)		//スコアを受けて
 	{
-		return 21;
+		return 21;								//表す画像の個数を返す
 	}
 	if (Score() >= 200)
 	{
