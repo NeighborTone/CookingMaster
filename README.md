@@ -31,8 +31,10 @@
 + メインキャラクタデザイン
 + システムプログラム
 + アニメーションプログラム(音符)
-### **Heewon Kim https://github.com/Nuntaeng**
+
+### **Heewon Kim (サポート) https://github.com/Nuntaeng**
 + シーン遷移プログラム補助
+
 ## 開発環境
 
 VisualStudio2017 C/C++
