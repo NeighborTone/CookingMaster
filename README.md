@@ -23,6 +23,7 @@
 + システムプログラム
 + サウンドプログラム   
 + UIプログラム(タイトル)
++ SEのリポジトリ->https://github.com/tonarinohito/cookingsound
 ### **jiyoung-m https://github.com/jiyoung-m**
 + メイン企画
 + 音符(野菜、ネズミ),背景,UI,メインキャラクタ(女の子)の彩色,サブキャラクタ
