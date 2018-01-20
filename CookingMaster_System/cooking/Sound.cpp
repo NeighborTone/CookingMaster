@@ -3,18 +3,18 @@
 bool Sound::Initialize()
 {
 	
-	SE[appear]   = LoadSoundMem("./Sound/出現.ogg");
-	SE[carrot]   = LoadSoundMem("./Sound/ニンジン.ogg");
-	SE[onion]    = LoadSoundMem("./Sound/タマネギ.ogg");
-	SE[broccoli] = LoadSoundMem("./Sound/ブロッコリー.ogg");
-	SE[cabbage]  = LoadSoundMem("./Sound/キャベツ.ogg");
-	SE[tomato]   = LoadSoundMem("./Sound/トマト.ogg");
-	SE[potato]   = LoadSoundMem("./Sound/ジャガイモ.ogg");
-	SE[mouse]    = LoadSoundMem("./Sound/キャベツ.ogg");
-	SE[grill]    = LoadSoundMem("./Sound/肉を焼く.ogg");
-	SE[bell]     = LoadSoundMem("./Sound/入店.ogg");
-	SE[bell2]    = LoadSoundMem("./Sound/お疲れ様!.ogg");
-	BGM = LoadSoundMem("./Sound/未完成.wav");
+	SE[appear]   = LoadSoundMem("./Sound/appear.ogg");
+	SE[carrot]   = LoadSoundMem("./Sound/carrot.ogg");
+	SE[onion]    = LoadSoundMem("./Sound/onion.ogg");
+	SE[broccoli] = LoadSoundMem("./Sound/broccoli.ogg");
+	SE[cabbage]  = LoadSoundMem("./Sound/cabbage.ogg");
+	SE[tomato]   = LoadSoundMem("./Sound/tomato.ogg");
+	SE[potato]   = LoadSoundMem("./Sound/potato.ogg");
+	SE[mouse]    = LoadSoundMem("./Sound/cabbage.ogg");
+	SE[grill]    = LoadSoundMem("./Sound/grill.ogg");
+	SE[bell]     = LoadSoundMem("./Sound/EnterShop.ogg");
+	SE[bell2]    = LoadSoundMem("./Sound/Thankyou.ogg");
+	BGM = LoadSoundMem("./Sound/Let'sCooking.wav");
 
 
 	flag = true;

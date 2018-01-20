@@ -6,7 +6,7 @@ bool Title::Initialize()
 {
 	sound.Initialize();
 	sound.InitBGM();	
-	sound.SetBGM("./Sound/‚¢‚ç‚Á‚µ‚á‚¢‚Ü‚¹!.ogg");
+	sound.SetBGM("./Sound/Welcome.ogg");
 	a = 255 / 3;
 	startFlag = false;
 	endFlag = false;
