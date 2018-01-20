@@ -4,11 +4,11 @@ namespace Player {
 	static const int
 		SCREEN_WIDIH = 960,
 		SCREEN_HEIGHT = 540;
-	const int num = 7;
-	int alpha;	//α値エフェクト用
-	Cock cock;
-	Cock check;	//あたり判定の可視化に用いる、不要になったら削除
-	Effect effect;
+	const int frame = 7;	//最大フレーム数
+	int alpha;			//α値エフェクト用
+	Cock cock;			//プレーヤーの画像
+	Cock check;			//あたり判定の可視化に用いる、不要になったら削除
+	Effect effect;		//エフェクトの画像
 	Metronome::StaffAnimation staff;
 
 	void Stand_Animation();
@@ -45,7 +45,7 @@ namespace Player {
 
 		//エラーチェック用変数。
 		pic[0] = LoadDivGraph("./Graph/stand.png", 3, 3, 1, 277, 524, cock.Gstand);
-		pic[1] =LoadDivGraph("./Graph/cutR.png", 3, 3, 1, 394, 495, cock.GcutR);
+		pic[1] = LoadDivGraph("./Graph/cutR.png", 3, 3, 1, 394, 495, cock.GcutR);
 		pic[2] = LoadDivGraph("./Graph/cutL.png", 3, 3, 1, 388, 517, cock.GcutL);
 		pic[3] = LoadDivGraph("./Graph/bottom.png", 3, 3, 1, 336, 521, cock.GcutB);
 		cock.e_pic = LoadGraph("./Graph/effect.png", true);
@@ -97,13 +97,13 @@ namespace Player {
 		DrawCircle((check.x / 2) + 10, check.y + 90, 50, GetColor(255, 0, 0), false);		//左 (x+10,y+90)
 		DrawCircle(check.x - 145, check.y - 110, 50, GetColor(255, 0, 0), false);//上(x+10,y+90)
 		DrawCircle(check.x - 145, check.y + 240, 50, GetColor(255, 0, 0), false);//下(x+10,y+90)
-		DrawFormatString(0, 100, GetColor(0, 0, 0), "x : %d\n y : %d",cock.x,cock.y );
+		DrawFormatString(0, 100, GetColor(0, 0, 0), "x : %d\n y : %d", cock.x, cock.y);
 #endif
 	}
 
 	void Fin()
 	{
-		for (int i = 3; i < num; ++i)
+		for (int i = 0; i < 3; ++i)
 		{
 			DeleteGraph(cock.Gstand[i]);
 			DeleteGraph(cock.GcutR[i]);
@@ -117,17 +117,17 @@ namespace Player {
 	void Stand_Animation()
 	{
 		//★待機状態だけ描く
-		int anime[num * 2] = { 2,2,2,1,1,0,0,0,0,0,1,1,2,2 };
+		int anime[frame * 2] = { 2,2,2,1,1,0,0,0,0,0,1,1,2,2 };
 		if (cock.state == down && cock.flag == true) {
 			++cock.animCnt;
-			if (cock.animCnt > num) {
+			if (cock.animCnt > frame) {
 				cock.state = up;
 				cock.flag = false;
 			}
 		}
 		if (cock.state == up && cock.flag == true) {
 			++cock.animCnt;
-			if (cock.animCnt > num * 2 - 1) {
+			if (cock.animCnt > frame * 2 - 1) {
 				cock.animCnt = 0;
 				cock.state = down;
 				cock.flag = false;
@@ -143,13 +143,13 @@ namespace Player {
 	void RCut_Animation()
 	{
 		if (cock.state == cut && cock.dir == RIGHT) {
-			int anime[num] = { 0,0,1,1,2,2,2 };
+			int anime[frame] = { 0,0,1,1,2,2,2 };
 			DrawRotaGraph(int(cock.x), int(cock.y), 0.6, 0.0, cock.GcutR[anime[cock.animCnt / 3]], true);
 			cock.animCnt++;
 			if (effect.flag == true) {
 				Effect_draw();
 			}
-			if (cock.animCnt > num * 3 - 1) {
+			if (cock.animCnt > frame * 3 - 1) {
 				cock.state = down;
 				cock.animCnt = 0;
 			}
@@ -158,13 +158,13 @@ namespace Player {
 	void LCut_Animation()
 	{
 		if (cock.state == cut && cock.dir == LEFT) {
-			int anime[num] = { 0,0,1,1,2,2,2 };
+			int anime[frame] = { 0,0,1,1,2,2,2 };
 			DrawRotaGraph(int(cock.x), int(cock.y), 0.6, 0.0, cock.GcutL[anime[cock.animCnt / 3]], true);
 			cock.animCnt++;
 			if (effect.flag == true) { //エフェクト
 				Effect_draw();
 			}
-			if (cock.animCnt > num * 3 - 1) {
+			if (cock.animCnt > frame * 3 - 1) {
 				cock.state = down;
 				cock.animCnt = 0;
 			}
@@ -173,13 +173,13 @@ namespace Player {
 	void BHit_Animation()
 	{
 		if (cock.state == cut && cock.dir == BOTTOM) {
-			int anime[num] = { 0,0,1,1,2,2,2 };
+			int anime[frame] = { 0,0,1,1,2,2,2 };
 			DrawRotaGraph(int(cock.x), int(cock.y), 0.6, 0.0, cock.GcutB[anime[cock.animCnt / 3]], true);
 			cock.animCnt++;
 			if (effect.flag == true) { //エフェクト
 				Effect_draw();
 			}
-			if (cock.animCnt > num * 3 - 1) {
+			if (cock.animCnt > frame * 3 - 1) {
 				cock.state = down;
 				cock.animCnt = 0;
 			}
@@ -188,10 +188,11 @@ namespace Player {
 
 	void Effect_draw()
 	{
-		
+
 		if (effect.Cnt <= 5) {			//cut始めてから5フレイム後まで
+
 			if (cock.dir == RIGHT) {	//右方向のエフェクト
-				SetDrawBlendMode(DX_BLENDMODE_ALPHA,  alpha);		//ブレンドモードαを設定
+				SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);		//ブレンドモードαを設定
 				DrawRotaGraph(check.x - 20, check.y + 80, 1.0, 0.0, cock.e_pic, true);
 				SetDrawBlendMode(DX_BLENDMODE_NOBLEND, alpha = 0);		//ブレンドモードをオフ
 			}
@@ -208,11 +209,11 @@ namespace Player {
 		}
 		else
 		{
-			
+
 			effect.flag = false;
 			effect.Cnt = 0;
 		}
-		
+
 		effect.Cnt++;
 	}
 
